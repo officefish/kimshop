@@ -1,0 +1,20 @@
+{% extends "custom/catalogue/detail.html" %}
+{% load i18n %}
+
+{% block product_review %}
+    <div id="addreview" class="review_add" style="padding-left: 0px; width: 80%">
+        <form id="add_review_form" method="post" action="./#addreview">
+            <fieldset>
+                <h2>{% trans "Leave a product review" %}</h2>
+                {% csrf_token %}
+                {% include "partials/form_fields.html" with form=form %}
+                <div class="submit-wrapper">
+                    <button type="submit"  class="btn btn-primary">{% trans "Submit" %}</button>
+                     {% trans "or" %}
+                     <a href="{{ product.get_absolute_url }}" >{% trans "cancel" %}</a>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

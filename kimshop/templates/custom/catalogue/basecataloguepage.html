@@ -1,0 +1,70 @@
+{% extends "custom/layout.html" %}
+
+{% load history_tags %}
+{% load currency_filters %}
+{% load reviews_tags %}
+{% load staticfiles %}
+{% load product_tags %}
+{% load display_tags %}
+{% load i18n %}
+{% load purchase_info_tags %}
+
+{% block extrastyles %}
+    	<!-- shop -->
+		<link href="{% static "assets/css/shop.css" %}" rel="stylesheet" type="text/css" />
+		<link href="{% static "assets/plugins/egorkhmelev-jslider/css/_pack.css" %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block title %}
+    {{ product.title }} | {{ block.super }}
+{% endblock %}
+
+{% block description %}
+    {{ product.description|default:""|striptags }}
+{% endblock %}
+
+
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+    <div id="middle" class="container">
+        <div class="white">
+            <div class="row">
+                <div class="col col-md-12">
+                    {% block breadcrumbs %}
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{{ homepage_url }}">{% trans "Home" %}</a>
+                            <span class="divider">/</span>
+                        </li>
+                        {% with category=product.categories.all.0 %}
+                            {% for c in category.get_ancestors %}
+                            <li>
+                                <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                                <span class="divider">/</span>
+                            </li>
+                            {% endfor %}
+                            <li class="active">{{ product.title }}</li>
+
+                            {% get_back_button as backbutton %}
+                            {% if backbutton %}
+                                <li class="pull-right">
+                                    <a href="{{ backbutton.url }}">
+                                        <i class="icon-arrow-left"></i> {{ backbutton.title }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endwith %}
+                    </ul>
+                {% endblock %}
+                </div>
+            </div>
+            <div class="row">
+
+                {% block tabcontent %}{% endblock tabcontent %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

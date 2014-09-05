@@ -1,0 +1,37 @@
+{% extends "custom/layout.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% block content %}
+{% load form_tags %}
+
+    <div id="middle" class="container">
+			<div class="white">
+
+				<header class="page-header">
+					<h1>{% trans 'Register' %}</h1>
+				</header>
+
+                <form id="register_form" action="{{ request.get_full_path }}" method="post" class="well" >{% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% include "custom/partials/form_fields.html"  %}
+                        </div>
+                    </div>
+                    <div class="row">
+                         <div class="col-md-6 submit-wrapper">
+                            <button name="registration_submit" type="submit" value="Register" class="btn btn-primary push-bottom pull-right" data-loading-text="Регистрация...">Зарегистрироваться</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                        <a class="pull-right " href="{% url 'customer:login' %}">отмена</a>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+
+
+{% endblock %}

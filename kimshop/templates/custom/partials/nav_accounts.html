@@ -1,0 +1,91 @@
+{% load i18n %}
+{% load staticfiles %}
+<div id="topBar">
+			<div class="container">
+				<span class="hidden-xs">Welcome to Alkaline: you@domain.com or</span>
+				+800-123-456
+
+
+
+				<!-- LANGUAGE -->
+				<div class="btn-group pull-right">
+
+                    <button class="dropdown-toggle language" type="button" data-toggle="dropdown">
+						{% if LANGUAGE_CODE == 'ru'  %}
+                             <img id="current_lang" src="{% static "assets/images/flags/ru.png" %}" width="16" height="11" alt="RU Language" /> <span class="hidden-xs">Русский</span> <span class="caret"></span>
+                        {% else %}
+                             <img id="current_lang" src="{% static "assets/images/flags/us.png" %}" width="16" height="11" alt="EN Language" /> <span class="hidden-xs">English</span> <span class="caret"></span>
+                        {% endif %}
+					</button>
+
+					<ul class="dropdown-menu">
+						<li>
+							<a href="{% url 'custom_set_language' 1 %}">
+								<img src="{% static "assets/images/flags/us.png" %}" width="16" height="11" alt="EN Language" /> [US] English
+							</a>
+						</li>
+						<li>
+							<a href="{% url 'custom_set_language' 2 %}">
+								<img src="{% static "assets/images/flags/ru.png" %}" width="16" height="11" alt="RU Language" /> [RU] Russian
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- /LANGUAGE -->
+
+				{% if user.is_authenticated %}
+                    <div class="btn-group pull-right">
+                        <button class="dropdown-toggle language" type="button" data-toggle="dropdown">
+                            <i class="fa fa-user" style="margin-right: 10px"></i>{% trans "Account" %}<span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{% url 'customer:profile-view' %}"><i class="fa fa-cogs"></i> {% trans 'Account' %}</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'customer:order-list' %}"><i class="fa fa-book"></i> {% trans 'Order history' %}</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'customer:logout' %}"><i class="fa fa-power-off"></i> {% trans 'Logout' %}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% if user.is_staff or perms.partner.dashboard_access %}
+                        <div class="pull-right">
+                             <a href="{% url 'dashboard:index' %}"><i class="fa fa-bars" style="margin-right: 10px"></i>{% trans "Dashboard" %}</a>
+                        </div>
+                    {% endif %}
+                {% else %}
+                         <div class="btn-group pull-right">
+                        <button class="dropdown-toggle language" type="button" data-toggle="dropdown">
+                            <i class="fa fa-user" style="margin-right: 10px"></i>{% trans "Account" %}<span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                               <a href="{% url 'customer:login' %}"><i class="fa fa-user"></i> {% trans 'Log In' %}</a>
+                            </li>
+                            <li>
+                               <a href="{% url 'customer:register' %}"><i class="fa fa-key"></i> {% trans 'Register' %}</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+
+
+				<!--
+					LINKS - A MENU ALTERNATIVE
+					Do not use this for responsive - too many links.
+					If you want to use it, add class: hidden-xs
+					Or use it instead of language / my account
+				-->
+				<!--
+				<ul class="pull-right list-unstyled links">
+					<li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+					<li><a href="#"><i class="fa fa-user"></i> Register</a></li>
+				</ul>
+				-->
+
+			</div>
+		</div>

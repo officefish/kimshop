@@ -1,0 +1,42 @@
+{% load currency_filters %}
+{% load category_tags %}
+{% load i18n %}
+
+<div class="navbar-collapse nav-main-collapse collapse pull-left">
+    <nav class="nav-main">
+        <ul class="nav nav-pills nav-main scroll-menu" id="topMain">
+
+            <li class="active">
+                <a class="dropdown-toggle" href="{% url 'ru_home' %}">Главная</a>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" href="#">Магазин <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu pull-right">
+                    {% category_tree depth=1 as tree_categories %}
+                    <li><a tabindex="-1" href="{% url 'catalogue:index' %}">{% trans "All products" %}</a></li>
+                    {% if tree_categories %}
+                        <li class="divider"></li>
+                        {% for tree_category, info in tree_categories %}
+                            <li><a tabindex="-1" href="{{ tree_category.get_absolute_url }}">{{ tree_category.name }}</a></li>
+                            {% for close in info.num_to_close %}
+                                </ul></li>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" href="#">Контакты <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu pull-right">
+                    <li><a href="contact-1.html">Contact #1</a></li>
+                    <li><a href="contact-2.html">Contact #2</a></li>
+                    <li><a href="contact-3.html">Contact #3</a></li>
+                    <li><a href="contact-4.html">Contact #4</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+</div>

@@ -1,0 +1,43 @@
+DEBUG 2014-07-13 11:36:30,843 views custom:ShippingAddressView::post
+DEBUG 2014-07-13 11:36:30,843 views custom:ShippingAddressView::get_initial
+DEBUG 2014-07-13 11:36:30,849 views custom:ShippingAddressView::get_initial
+DEBUG 2014-07-13 11:36:30,849 views custom:ShippingAddressView::get_available_address
+DEBUG 2014-07-13 11:40:23,136 views custom:ShippingAddressView::post
+DEBUG 2014-07-13 11:40:23,136 views custom:ShippingAddressView::get_initial
+DEBUG 2014-07-13 11:40:23,142 views custom:ShippingAddressView::get_initial
+DEBUG 2014-07-13 11:40:23,142 views custom:ShippingAddressView::get_available_address
+DEBUG 2014-07-13 11:41:22,849 views custom:ShippingAddressView::get_initial
+DEBUG 2014-07-13 11:41:32,939 views custom:ShippingAddressView::get_initial
+DEBUG 2014-07-13 11:47:04,718 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-13 11:47:28,193 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-13 12:22:50,796 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-13 12:23:01,842 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-13 12:23:23,872 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-13 12:30:20,248 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-13 12:30:30,706 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-13 12:30:48,084 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-13 12:44:17,389 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-13 12:44:34,516 views custom:ShippingAddressView::get_context_data
+INFO 2014-07-13 12:52:43,759 views Order #100001: beginning submission process for basket #1
+INFO 2014-07-13 12:52:43,764 views Order #100001: payment successful, placing order
+INFO 2014-07-13 12:52:44,019 mixins Order #100001 - sending ORDER_PLACED messages
+INFO 2014-07-13 12:52:44,025 utils Sending email to inozemcev.smg@yandex.ru
+DEBUG 2014-07-13 15:16:00,500 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-13 19:22:46,938 views custom:ShippingAddressView::get_context_data
+INFO 2014-07-13 19:23:18,858 views Order #100002: beginning submission process for basket #2
+INFO 2014-07-13 19:23:18,863 views Order #100002: payment successful, placing order
+INFO 2014-07-13 19:23:19,082 mixins Order #100002 - sending ORDER_PLACED messages
+INFO 2014-07-13 19:23:19,097 utils Sending email to inozemcev.smg@yandex.ru
+DEBUG 2014-07-15 10:15:49,081 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-15 10:17:36,455 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-15 10:19:10,846 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-15 10:19:25,914 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-15 10:21:08,514 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-15 10:22:54,593 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-15 10:23:47,598 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-15 10:24:29,502 views custom:ShippingAddressView::get_context_data
+DEBUG 2014-07-15 10:25:02,065 views custom:ShippingAddressView::get_context_data
+INFO 2014-08-06 12:02:33,705 views Order #100003: beginning submission process for basket #3
+INFO 2014-08-06 12:02:33,706 views Order #100003: payment successful, placing order
+INFO 2014-08-06 12:02:33,743 mixins Order #100003 - sending ORDER_PLACED messages
+INFO 2014-08-06 12:02:33,744 utils Sending email to inozemcev.smg@yandex.ru

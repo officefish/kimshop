@@ -1,0 +1,19 @@
+<VirtualHost *:80>
+    ServerName venturevisual.net
+    ServerAlias www.venturevisual.net *.venturevisual.net
+    ServerAdmin admin@obereg.com
+
+    WSGIScriptAlias / /www/django/kimshop/kimshop/wsgi.py
+    ErrorLog        / /www/django/kimshop/deploy/venturevisual.net.error.log
+
+</VirtualHost>
+
+<VirtualHost 5.45.124.167:80 >
+	ServerName venturevisual.net
+	CustomLog /var/www/httpd-logs/venturevisual.net.access.log combined
+	DocumentRoot /var/www/inozemcev/data/www/venturevisual.net
+	ErrorLog /var/www/httpd-logs/venturevisual.net.error.log
+	ServerAdmin inozemcev.smg@yandex.ru
+	ServerAlias www.venturevisual.net
+	SuexecUserGroup inozemcev inozemcev
+</VirtualHost>

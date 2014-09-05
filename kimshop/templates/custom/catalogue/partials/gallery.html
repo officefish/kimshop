@@ -1,0 +1,42 @@
+{% load thumbnail %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% with all_images=product.images.all %}
+    {# use length rather then count as the images get queried anyways #}
+
+    {% if all_images|length > 1 %}
+
+
+
+          <div class="owl-carousel controlls-over product-image" data-plugin-options='{"items": 1, "singleItem": true, "navigation": true, "pagination": true, "transitionStyle":"fadeUp"}'>
+			{% for image in all_images %}
+                <div>
+                    {% thumbnail image.original "600x600" upscale=False as thumb %}
+                         <img src="{{ thumb.url }}" alt="{{ product.get_title }}"class="img-responsive">
+                    {% endthumbnail %}
+                </div>
+            {% endfor %}
+          </div>
+
+
+
+    {% else %}
+
+        {# Only one image to show #}
+        <div id="product_gallery" class="carousel">
+            <div class="thumbnail">
+                <div class="carousel-inner">
+                    <div class="item active">
+                    {% with image=product.primary_image %}
+                        {% thumbnail image.original "440x400" upscale=False as thumb %}
+                            <img src="{{ thumb.url }}" alt="{{ product.get_title }}" />
+                        {% endthumbnail %}
+                    {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+{% endwith %}

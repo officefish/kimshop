@@ -1,0 +1,73 @@
+{% extends "custom/layout.html" %}
+
+{% load i18n %}
+{% load staticfiles %}
+
+ {# Additional CSS - specific to certain pages #}
+ {% block extrastyles %}
+     <link href="{% static "assets/css/shop.css" %}" rel="stylesheet" type="text/css" />
+		<link href="{% static "assets/plugins/egorkhmelev-jslider/css/_pack.css" %}" rel="stylesheet" type="text/css" />
+ {% endblock %}
+
+{% block title %}
+    {{ page_title }} | {% trans 'Account' %} | {{ block.super }}
+{% endblock %}
+
+{% block headertext %}{{ page_title }}{% endblock %}
+
+{% block column_left %}
+
+{% endblock %}
+
+{% block content %}
+    <div id="middle" class="container">
+        <div class="white">
+            <div class="row">
+                <aside class="col col-md-3">
+                    <ul class="nav nav-list">
+                    {% block standard_tabs %}
+                        <li{% if active_tab == 'profile' %} class="active"{% endif %}>
+                            <a href="{% url 'customer:profile-view' %}"><i class="fa fa-angle-right"></i> {% trans "Profile" %}</a>
+                        </li>
+                        <li{% if active_tab == 'orders' %} class="active"{% endif %}>
+                            <a href="{% url 'customer:order-list' %}"><i class="fa fa-angle-right"></i> {% trans "Order History" %}</a>
+                        </li>
+                        <li{% if active_tab == 'addresses' %} class="active"{% endif %}>
+                            <a href="{% url 'customer:address-list' %}"><i class="fa fa-angle-right"></i> {% trans "Address Book" %}</a>
+                        </li>
+                        <li{% if active_tab == 'emails' %} class="active"{% endif %}>
+                            <a href="{% url 'customer:email-list' %}"><i class="fa fa-angle-right"></i> {% trans "Email History" %}</a>
+                        </li>
+                        <li{% if active_tab == 'alerts' %} class="active"{% endif %}>
+                            <a href="{% url 'customer:alerts-list' %}"><i class="fa fa-angle-right"></i> {% trans "Product Alerts" %}</a>
+                        </li>
+                        <li{% if active_tab == 'notifications' %} class="active"{% endif %}>
+                            <a href="{% url 'customer:notifications-inbox' %}"><i class="fa fa-angle-right"></i> {% trans "Notifications" %}</a>
+                        </li>
+                        <li{% if active_tab == 'wishlists' %} class="active"{% endif %}>
+                            <a href="{% url 'customer:wishlists-list' %}"><i class="fa fa-angle-right"></i> {% trans "Wish Lists" %}</a>
+                        </li>
+                    {% endblock %}
+                    </ul>
+                 </aside>
+                 <div class="col col-md-9">
+                     <div class="breadcrumb-wrapper">
+                         <ul class="breadcrumb">
+                            <li>
+                                <a href="{{ homepage_url }}">{% trans 'Home' %}</a>
+                                <span class="divider">/</span>
+                            </li>
+                            <li>
+                                <a href="{% url 'customer:summary' %}">{% trans 'Account' %}</a>
+                                <span class="divider">/</span>
+                            </li>
+                            {% block extra_breadcrumbs %}{% endblock %}
+                            <li class="active">{{ page_title }}</li>
+                        </ul>
+                    </div>
+                    {% block tabcontent %}{% endblock tabcontent %}
+                </div>
+
+        </div>
+    </div>
+{% endblock content %}

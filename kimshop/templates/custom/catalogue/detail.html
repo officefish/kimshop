@@ -1,0 +1,205 @@
+{% extends "custom/catalogue/basecataloguepage.html" %}
+
+{% load history_tags %}
+{% load currency_filters %}
+{% load reviews_tags %}
+{% load staticfiles %}
+{% load product_tags %}
+{% load display_tags %}
+{% load i18n %}
+{% load purchase_info_tags %}
+
+
+{% block tabcontent %}
+
+
+
+    <header class="page_header">
+		 {% if user.is_authenticated and user.is_staff %}
+            <a class="pull-right hidden-phone" href="{% url 'dashboard:catalogue-product' pk=product.id %}"><small><i class="icon-edit"></i> {% trans "Edit this product" %}</small></a>
+        {% endif %}
+        <h1 >{{ product.get_title }}</h1>
+
+	</header>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+           {% block product_gallery %}
+                <div class="span6">
+                    {% include "custom/catalogue/partials/gallery.html" %}
+                </div>
+           {% endblock %}
+           {% iffeature "reviews" %}
+               {% if product.rating != None %}
+                    <h4 class="star-rating {{ product.rating|as_stars }}">
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+                        <i class="icon-star"></i>
+
+                        <small><a href="{% url 'catalogue:reviews-list' product_slug=product.slug product_pk=product.id %}">
+                            {% blocktrans count product.num_approved_reviews as num_reviews %}
+                            1 customer review
+                            {% plural %}
+                            {{ num_reviews }} customer reviews
+                            {% endblocktrans %}
+                        </a></small>
+                        &nbsp;
+               {% endif %}
+               {% if product|is_review_permitted:user %}
+                    <a id="write_review" href="{% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id %}#addreview" class="btn btn-success btn-sm center-block">
+                        {% trans "Write a review" %}
+                    </a>
+               {% endif %}
+           {% endiffeature %}
+        </div>
+
+        <div class="col col-md-6 product-detail">
+
+            <!-- product price -->
+            <div class="productRowInfo" style="margin-bottom: 80px">
+                   {% block product_stock_record %}
+                        {% include "custom/catalogue/partials/stock_record.html" with verbose=1 %}
+                   {% endblock %}
+                <span class="price styleSecondColor fsize20"></span>
+            </div>
+            <!-- /product price -->
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                {% block product_basket_form %}
+                                     {% include "custom/catalogue/partials/add_to_basket_form.html" %}
+                                 {% endblock %}
+                            </div>
+                        </div>
+
+
+
+                <!-- product description -->
+                {% if product.description %}
+                <div class="row">
+                    <div class="col-md-11">
+                              <h2>{% trans "Product Description" %}</h2>
+                              {{ product.description|safe }}
+                    </div>
+                </div>
+                {% endif %}
+                <!-- /product description -->
+
+
+                {% block product_info %}
+                    <div class="sub-header">
+                        <h2>{% trans "Product Information" %}</h2>
+                    </div>
+                    <table class="table table-striped table-condensed">
+                        {% if product.upc %}
+                        <tr>
+                            <th>{% trans "UPC" %}</th><td>{{ product.upc }}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% trans "Product Type" %}</th><td>{{ product.get_product_class.name }}</td>
+                        </tr>
+
+                        {% purchase_info_for_product request product as session %}
+                        {% if session.price.exists %}
+                            <tr>
+                                <th>{% trans "Price (excl. tax)" %}</th><td>{{ session.price.excl_tax|currency:session.price.currency }}</td>
+                            </tr>
+                            {% if session.price.is_tax_known %}
+                                <tr>
+                                    <th>{% trans "Price (incl. tax)" %}</th><td>{{ session.price.incl_tax|currency:session.price.currency }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{% trans "Tax" %}</th><td>{{ session.price.tax|currency:session.price.currency }}</td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <th>{% trans "Availability" %}</th>
+                                <td>{{ session.availability.message }}</td>
+                            </tr>
+                        {% endif %}
+                        {% for av in product.attribute_values.all %}
+                            <tr>
+                                <th>{{ av.attribute.name }}</th>
+                                <td>{{ av.value_as_html }}</td>
+                            </tr>
+                        {% endfor %}
+                        {% iffeature "reviews" %}
+                            <tr>
+                                <th>{% trans "Number of reviews" %}</th>
+                                <td>{{ product.num_approved_reviews }}</td>
+                            </tr>
+                        {% endiffeature %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                {% endblock %}
+
+                {% iffeature "reviews" %}
+                        {% block product_review %}
+                        <section>
+                            <div id="reviews" class="sub-header">
+                                {% if product.num_approved_reviews > 3 %}
+                                    <a href="{% url 'catalogue:reviews-list' product_slug=product.slug product_pk=product.id %}" class="btn pull-right">{% trans "See all reviews" %}</a>
+                                {% endif %}
+                                <h2>{% trans "Customer Reviews" %}</h2>
+                            </div>
+
+                            {% if product.num_approved_reviews == 0 %}
+                                <p>
+                                    {% if product|is_review_permitted:user %}
+                                        {% url 'catalogue:reviews-add' product_slug=product.slug product_pk=product.id as add_review_url %}
+                                            {% trans 'This product does not have any reviews yet' %}.
+                                            <a href="{{ add_review_url }}#addreview">Будьте первым, кто напишет отзыв</a>.
+                                    {% else %}
+                                        {% trans "This product does not have any reviews yet" %}.
+                                    {% endif %}
+                                </p>
+                            {% else %}
+                                <ol class="unstyled review-list">
+                                    {% for review in reviews|slice:":3" %}
+                                        <li>
+                                        {% include 'catalogue/partials/review.html' %}
+                                        </li>
+                                    {% endfor %}
+                                </ol>
+                            {% endif %}
+                        </section>
+                        {% endblock product_review %}
+                {% endiffeature %}
+
+                {% with recommended_products=product.recommended_products.all|slice:":6" %}
+                    {% if recommended_products %}
+                        <div class="sub-header">
+                            <h2>{% trans "Recommended items" %}</h2>
+                        </div>
+                        <ul class="row-fluid">
+                            {% for product in recommended_products %}
+                            <li class="span2 {% if forloop.counter0|divisibleby:"6" %}no-margin{% endif %}">
+                                {% render_product product %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                 {% endwith %}
+
+
+
+            <!-- product detail -->
+        </div>
+    </div>
+
+
+
+{% endblock tabcontent %}
+
+{% block extrascripts %}
+    {{ block.super }}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% load staticfiles %}
+{% load i18n %}
+
+<ul id="topOptions">
+    <li>
+        <button class="topSearchBtn fa fa-search"></button>
+        <!-- search form -->
+        <form id="topSearch" method="get" action="page-search.html" class="input-group pull-right">
+            <input type="text" class="form-control" name="k" id="k" value="" placeholder="Search">
+            <span class="input-group-btn">
+                <button class="btn btn-primary notransition"><i class="fa fa-check"></i></button>
+            </span>
+        </form>
+        <!-- /search form -->
+    </li>
+    <li>
+        <div class="button topShopCart fa fa-shopping-cart">
+            <span class="items on"><!-- add class "on" for active -->{{ request.basket.num_lines }} items</span>
+            <div id="topCart" class="nicescroll">
+                <p><b>Total: &euro;1220</b></p>
+                <a href="shop-single.html" class="item">
+                    <img src="{% static "assets/images/demo/shop/small/1.jpg" %}" width="40" alt="" />
+                    <p>Elipsis - Very long title to see how it works</p>
+                    <span>2 x &euro;250</span>
+                </a>
+                <a href="shop-single.html" class="item">
+                    <img src="{% static "assets/images/demo/shop/small/2.jpg" %}" width="40" alt="" />
+                    <p>Extr cool ipad for your family</p>
+                    <span>1 x &euro;250</span>
+                </a>
+                <a href="shop-single.html" class="item">
+                    <img src="{% static "assets/images/demo/shop/small/3.jpg" %}" width="40" alt="" />
+                    <p>Extr cool ipad for your family</p>
+                    <span>1 x <span class="line-through">&euro;250</span> &euro;220</span>
+                </a>
+
+                <div class="bottom">
+                    <a href="shop-checkout.html" class="btn">PROCEED TO CHECKOUT</a>
+                    <a href="shop-cart.html">View your cart (3 items)</a>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li><!-- Mobile Menu Button -->
+        <button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+            <i class="fa fa-bars"></i>
+        </button>
+    </li>
+</ul>

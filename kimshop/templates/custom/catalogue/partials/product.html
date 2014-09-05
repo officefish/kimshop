@@ -1,0 +1,39 @@
+{% load reviews_tags %}
+{% load thumbnail %}
+{% load i18n %}
+{% load display_tags %}
+{% load staticfiles %}
+
+{% block product %}
+    <div class="col-sm-6 col-md-4"><!-- item -->
+        <div class="item-box">
+
+            <figure>
+                <a class="item-hover"  href="{{ product.get_absolute_url }}">
+                    <span class="overlay" ></span>
+                    <span class="inner">
+                        <strong>ПОСМОТРЕТЬ</strong> ТОВАР
+                    </span>
+                </a>
+                 {% with image=product.primary_image %}
+                    {% thumbnail image.original "x260" upscale=False as thumb %}
+                        <img class="img-responsive" src="{{ thumb.url }}" alt="">
+                    {% endthumbnail %}
+                 {% endwith %}
+
+            </figure>
+             {% if not product.is_parent %}
+                    {% include "catalogue/partials/add_to_basket_form_compact.html" %}
+             {% endif %}
+
+            <div class="item-box-desc">
+                <h4>{{ product.get_title }}</h4>
+                <!--small class="styleColor"><span>$180</span></small-->
+                {% include "custom/catalogue/partials/small_stock_record.html" %}
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
